@@ -22,9 +22,14 @@ Logic Gates: Fundamental building blocks like AND, OR, and NOT gates are used to
 
 F1 = A’B’C’D’ + AC’D’ + B’CD’ + A’BCD + BC’D The terms can be simplified using K-map techniques to reduce the complexity of the circuit. F2 = xy’z + x’y’z + w’xy + wx’y + wxy Similar simplification can be done for this function to reduce the gate count. The resulting minimized expressions are implemented using Verilog HDL and simulated on the Quartus Prime tool. The outputs can then be verified on an FPGA board (e.g., Cyclone II).
 
-**Logic Diagram**
+**Truth Table**
 
-![image](https://github.com/user-attachments/assets/2920fe42-f900-4816-ba6b-e823cfcbc8e8)
+F1
+![image](https://github.com/user-attachments/assets/ff4858a7-2217-4a79-8c6c-969c1adfb587)
+
+F2
+![image](https://github.com/user-attachments/assets/ad787bfe-c50d-45a1-86aa-a29c739f8162)
+
 
 **Procedure**
 
@@ -38,38 +43,52 @@ F1 = A’B’C’D’ + AC’D’ + B’CD’ + A’BCD + BC’D The terms can b
 
 5.	For different input combinations generate the timing diagram.
 
+**BOOLEAN MINIMIZATION**
+
+F1
+![image](https://github.com/user-attachments/assets/b6d9457f-6e42-40d9-94a9-70a7e9dabcb3)
+
+F2
+![image](https://github.com/user-attachments/assets/d0751222-31a9-461c-b7f8-afb85a0cbc21)
+
 
 **Program:**
+
 ```
-module boolean_function_minimization(a, b, c, d, w, x, y, z, f1, f2);
- input a, b, c, d, w, x, y, z;
- output f1, f2;
- wire x1, x2, x3, x4, x5, x6, x7, x8, x9, x10;
- assign x1 = (~a) & (~b) & (~c) & (~d);
- assign x2 = (a) & (~c) & (~d);
- assign x3 = (~b) & (c) & (~d);
- assign x4 = (~a) & (b) & (c) & (d);
- assign x5 = (b) & (~c) & (d);
- assign f1 = x1 | x2 | x3 | x4 | x5;
- assign x6 = (x) & (~y) & (z);
- assign x7 = (~x) & (~y) & (z);
- assign x8 = (~w) & (x) & (y);
- assign x9 = (w) & (~x) & (y);
- assign x10 = (w) & (x) & (y);
- assign f2 = x6 | x7 | x8 | x9 | x10;
- endmodule
+i)F1
+module funct1(a,b,c,d,f1);
+input a,b,c,d;
+output f1;
+assign f1=((~b & ~d)|(~a & b & d)|(a & b & ~c));
+endmodule
+
+ii)F2
+module funct2(w,x,y,z,f2);
+input w,x,y,z;
+output f2;
+assign f2=((~y & z)|( w & y )|(x & y));0
+endmodule
+
 ```
 
 
 
 **RTL realization**
 
-![image](https://github.com/user-attachments/assets/c6db60ee-95eb-4a2b-9d14-753cbacc48a9)
+F1
+![image](https://github.com/user-attachments/assets/c4e5e3aa-1317-4492-b1c7-7015bee1c5dd)
+
+F2
+![image](https://github.com/user-attachments/assets/3f639924-363e-4f9c-bca8-2ea5fdadb83e)
 
 
 **Timing Diagram**
 
-![image](https://github.com/user-attachments/assets/b9b0ef54-2a62-47cf-a4d6-a74cfd5350fe)
+F1
+![image](https://github.com/user-attachments/assets/c68ebb94-7212-46eb-81a6-93cd25ba051e)
+F2
+![image](https://github.com/user-attachments/assets/8c8efb37-dab1-4933-a61f-5e3d9c7790d9)
+
 
 **Result:**
 
